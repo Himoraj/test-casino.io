@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Battle</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Case Battle</h1>
+        <p id="user-info">Загрузка данных...</p>
+        <button id="open-case">Открыть кейс</button>
+        <button id="close-app">Закрыть приложение</button>
+    </div>
+
+    <script>
+        // Инициализация WebApp Telegram
+        const tg = window.Telegram.WebApp;
+
+        // Показываем кнопку "Назад" в интерфейсе Telegram
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => tg.close());
+
+        // Получаем данные пользователя
+        const user = tg.initDataUnsafe.user;
+        document.getElementById('user-info').innerText = 
+            user ? `Привет, ${user.first_name}!` : 'Привет, гость!';
+
+        // Кнопка "Открыть кейс"
+        document.getElementById('open-case').addEventListener('click', () => {
+            tg.showPopup({
+                title: 'Кейс открыт!',
+                message: 'Вы выиграли 10 монет!',
+                buttons: [{ id: 'ok', type: 'ok' }]
+            });
+        });
+
+        // Кнопка "Закрыть приложение"
+        document.getElementById('close-app').addEventListener('click', () => {
+            tg.close();
+        });
+
+        // Развернуть WebApp на весь экран
+        tg.expand();
+    </script>
+</body>
+</html>
